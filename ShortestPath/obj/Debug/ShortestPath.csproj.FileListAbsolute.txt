@@ -1,0 +1,14 @@
+c:\users\dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\bin\Debug\ShortestPath.exe.config
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\bin\Debug\ShortestPath.exe
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\bin\Debug\ShortestPath.pdb
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath.csprojResolveAssemblyReference.cache
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\MainWindow.g.cs
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\App.g.cs
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath_MarkupCompile.cache
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath_MarkupCompile.lref
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\MainWindow.baml
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath.g.resources
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath.Properties.Resources.resources
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath.csproj.GenerateResource.Cache
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath.exe
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath.pdb
