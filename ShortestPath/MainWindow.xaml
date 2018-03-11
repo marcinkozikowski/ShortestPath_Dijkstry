@@ -13,9 +13,23 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Menu>
+        <Menu Name="MainMenu" IsMainMenu="True" FontSize="16px" Height="auto">
             <MenuItem Header="Plik">
-                <MenuItem Header="Wczytaj" Click="OpenFile"/>
+                <MenuItem Header="Wczytaj" Click="OpenFile">
+                    <MenuItem.Icon>
+                        <Image Source="Icons\window-open.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Zapisz" Click="SaveFileClick">
+                    <MenuItem.Icon>
+                        <Image Source="Icons\content-save.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Zakończ" Click="ExitAppClick">
+                    <MenuItem.Icon>
+                        <Image Source="Icons\exit-to-app.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="Ścieżka">
                 <MenuItem Header="Dijkstry"/>
@@ -27,16 +41,25 @@
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Content="Ilość miast: " FontWeight="Bold"/>
-            <Label Grid.Column="1" Content="0" Name="CitiesNumberLabel"/>
+            <Label Grid.Column="1" Content="0" Name="CitiesNumberLabel" Foreground="Red"/>
             <Label Grid.Column="2" Content="Ilość połączeń: " FontWeight="Bold"/>
-            <Label Grid.Column="3" Content="0" Name="PathsNumberLabel"/>
+            <Label Grid.Column="3" Content="0" Name="PathsNumberLabel" Foreground="Red"/>
+            
+            <Label Grid.Column="4" Content="Początek: " FontWeight="Bold"/>
+            <Label Grid.Column="5" Content="0" Name="SourceNumberLabel" Foreground="Red"/>
+            <Label Grid.Column="6" Content="Koniec: " FontWeight="Bold"/>
+            <Label Grid.Column="7" Content="0" Name="DestenationNumberLabel" Foreground="Red"/>
         </Grid>
         
     </Grid>

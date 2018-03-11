@@ -25,5 +25,15 @@ namespace ShortestPath.IO_Operations
 
             return cityPaths;
         }
+
+        public int[] getSourceAndDestanationPoints()
+        {
+            int[] points = new int[2];
+            string[] betweenPoints = readedLines[readedLines.Count()-1].Split(' ');
+            points[0] = int.Parse(betweenPoints[0]);
+            points[1] = int.Parse(betweenPoints[1]);
+
+            return points;
+        }
     }
 }
