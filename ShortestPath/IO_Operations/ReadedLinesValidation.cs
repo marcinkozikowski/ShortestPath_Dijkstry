@@ -61,13 +61,14 @@ namespace ShortestPath.IO_Operations
         }
         private int[,] writeEmptyGraph(int[,] graph)
         {
+            int INF = Dijkstry.INF;
             double count = Convert.ToDouble(graph.Length);
             int size = Convert.ToInt32(Math.Sqrt(count));
             for(int i=0;i<size;i++)
             {
                 for(int j=0;j<size;j++)
                 {
-                    graph[i, j] = 0;
+                    graph[i, j] = INF;
                 }
             }
             return graph;

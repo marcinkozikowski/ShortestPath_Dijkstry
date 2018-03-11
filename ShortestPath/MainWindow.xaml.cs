@@ -209,5 +209,24 @@ namespace ShortestPath
 
         }
         #endregion
+
+        private void DijkstryClick(object sender, RoutedEventArgs e)
+        {
+            int INF = Dijkstry.INF;
+
+            int SRC = SourceNumber;
+            int DEST = DestNumber;
+            var dijkstra = new Dijkstry(MainGraph);
+            int[] path = dijkstra.GetPath(SRC-1, DEST-1);
+
+            string pathDi = "Shortest path from "+SourceNumber+" to: "+DestNumber+" is:\n";
+            for(int i=0;i<path.Length;i++)
+            {
+                pathDi = pathDi+ (path[i]+1)+ " -> ";
+            }
+
+            StringTextBox.Text = pathDi;
+            
+        }
     }
 }
