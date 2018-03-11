@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace ShortestPath
         int pathsNumber;
         int sourceNumber;
         int destNumber;
+        int[,] mainGraph;
 
         #region Properties
 
@@ -81,6 +83,19 @@ namespace ShortestPath
             }
         }
 
+        public int[,] MainGraph
+        {
+            get
+            {
+                return mainGraph;
+            }
+
+            set
+            {
+                mainGraph = value;
+            }
+        }
+
         #endregion
 
         public MainWindow()
@@ -130,14 +145,59 @@ namespace ShortestPath
                     int[] sourceAndDestNumbers = fv.getSourceAndDestanationPoints();
                     setCityAndPathsNumberLabels(cityAndPathsNumber[0], cityAndPathsNumber[1]);
                     setSourceAndDestNumberLabels(sourceAndDestNumbers[0], sourceAndDestNumbers[1]);
-
+                    MainGraph = fv.getGraphPaths(CitiesNumber);
+                    StringTextBox.Text = WriteGraphAsString();
+                    ShowGrapInDataGrid();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                MessageBox.Show("Error: Nie można odczytać pliku z danymi: " + ex.Message);
             }
         }
+
+        private void ShowGrapInDataGrid()
+        {
+            DataTable dt = new DataTable();
+            int nbColumns = CitiesNumber;
+            int nbRows = CitiesNumber;
+
+            for (int i = 0; i < nbColumns; i++)
+            {
+                dt.Columns.Add(("City "+(i+1)).ToString());
+            }
+            //dt.Rows.Add();
+
+            for (int row = 0; row < nbRows; row++)
+            {
+                DataRow dr = dt.NewRow();
+                
+                for (int col = 0; col < nbColumns; col++)
+                {
+                        dr[col] = MainGraph[row, col]; 
+                }
+                dt.Rows.Add(dr);
+            }
+
+            InputDataGrid.ItemsSource = dt.DefaultView;
+        }
+
+        private string WriteGraphAsString()
+        {
+            string graphString="";
+
+            for(int i=0;i<CitiesNumber;i++)
+            {
+                for(int j=0;j<CitiesNumber;j++)
+                {
+                    graphString = graphString +" "+ MainGraph[i, j]; 
+                }
+                graphString = graphString + "\n";
+            }
+            return graphString;
+
+        }
+
 
         private void ExitAppClick(object sender, RoutedEventArgs e)
         {

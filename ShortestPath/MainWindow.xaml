@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ShortestPath"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="450" Width="600">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,6 +15,9 @@
         </Grid.RowDefinitions>
 
         <Menu Name="MainMenu" IsMainMenu="True" FontSize="16px" Height="auto">
+            <Menu.Background>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+            </Menu.Background>
             <MenuItem Header="Plik">
                 <MenuItem Header="Wczytaj" Click="OpenFile">
                     <MenuItem.Icon>
@@ -37,30 +41,87 @@
             <MenuItem Header="Pomoc"/>
         </Menu>
 
-        <TextBox Grid.Row="1" Name="StringTextBox"/>
-
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
+            <GroupBox Header="Tablica połączeń" Margin="5px">
+                <GroupBox.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                </GroupBox.BorderBrush>
+                <DataGrid Grid.Column="0" Name="InputDataGrid" RowDetailsVisibilityMode="Visible" CanUserResizeColumns="True" HeadersVisibility="All" RowHeaderWidth="20" SelectionMode="Single" ScrollViewer.CanContentScroll="True" Margin="5px" SelectionUnit="Cell">
+                    <DataGrid.BorderBrush>
+                        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                    </DataGrid.BorderBrush>
+                    <DataGrid.Background>
+                        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+                    </DataGrid.Background>
+                    <DataGrid.RowHeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path., 
+                        RelativeSource={RelativeSource AncestorType=DataGridRow}}"></TextBlock>
+                        </DataTemplate>
+                    </DataGrid.RowHeaderTemplate>
+                    <DataGrid.RowHeaderStyle>
+                        <Style>
+                            <Setter Property="Control.Background" Value="Gainsboro"/>
+                        </Style>
+                    </DataGrid.RowHeaderStyle>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style>
+                            <Setter Property="Control.Background" Value="Gainsboro"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                </DataGrid>
+            </GroupBox>
 
-            <Label Grid.Column="0" Content="Ilość miast: " FontWeight="Bold"/>
-            <Label Grid.Column="1" Content="0" Name="CitiesNumberLabel" Foreground="Red"/>
-            <Label Grid.Column="2" Content="Ilość połączeń: " FontWeight="Bold"/>
-            <Label Grid.Column="3" Content="0" Name="PathsNumberLabel" Foreground="Red"/>
-            
-            <Label Grid.Column="4" Content="Początek: " FontWeight="Bold"/>
-            <Label Grid.Column="5" Content="0" Name="SourceNumberLabel" Foreground="Red"/>
-            <Label Grid.Column="6" Content="Koniec: " FontWeight="Bold"/>
-            <Label Grid.Column="7" Content="0" Name="DestenationNumberLabel" Foreground="Red"/>
+            <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Stretch" Margin="5px">
+                <GridSplitter.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                </GridSplitter.Background>
+                <GridSplitter.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+                </GridSplitter.BorderBrush>
+            </GridSplitter>
+
+            <TextBox Grid.Column="2" Name="StringTextBox" Margin="5px">
+                <TextBox.BorderBrush>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                </TextBox.BorderBrush>
+            </TextBox>
         </Grid>
-        
+
+        <GroupBox Grid.Row="2" Margin="5px" Header="Dane wejściowe">
+            <GroupBox.BorderBrush>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+            </GroupBox.BorderBrush>
+            <Grid Margin="5px">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="Ilość miast: " FontWeight="Bold"/>
+                <Label Grid.Column="1" Content="0" Name="CitiesNumberLabel" Foreground="Red"/>
+                <Label Grid.Column="2" Content="Ilość połączeń: " FontWeight="Bold"/>
+                <Label Grid.Column="3" Content="0" Name="PathsNumberLabel" Foreground="Red"/>
+
+                <Label Grid.Column="4" Content="Początek: " FontWeight="Bold"/>
+                <Label Grid.Column="5" Content="0" Name="SourceNumberLabel" Foreground="Red"/>
+                <Label Grid.Column="6" Content="Koniec: " FontWeight="Bold"/>
+                <Label Grid.Column="7" Content="0" Name="DestenationNumberLabel" Foreground="Red"/>
+            </Grid>
+        </GroupBox>
+
+
+
     </Grid>
 </Window>

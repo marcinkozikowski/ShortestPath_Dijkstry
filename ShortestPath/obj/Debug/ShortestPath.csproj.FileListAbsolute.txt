@@ -12,3 +12,4 @@ C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\ob
 C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath.csproj.GenerateResource.Cache
 C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath.exe
 C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\ShortestPath.pdb
+C:\Users\Dell\documents\visual studio 2015\Projects\ShortestPath\ShortestPath\obj\Debug\GeneratedInternalTypeHelper.g.cs
