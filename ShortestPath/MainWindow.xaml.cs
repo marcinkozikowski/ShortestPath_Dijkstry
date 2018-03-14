@@ -138,7 +138,7 @@ namespace ShortestPath
                 if (openFileDialog1.ShowDialog() == true)
                 {
                     filePath = openFileDialog1.FileName;
-                    FileReader fr = new FileReader(filePath);
+                    FileReaderWriter fr = new FileReaderWriter(filePath);
                     string[] readedFile = fr.ReadAllLines();
                     ReadedLinesValidation fv = new ReadedLinesValidation(readedFile);
                     int[] cityAndPathsNumber = fv.getCitiesAndPathNumber();
@@ -205,7 +205,28 @@ namespace ShortestPath
 
         private void SaveFileClick(object sender, RoutedEventArgs e)
         {
+            string filePath = "";
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
 
+            saveFileDialog.InitialDirectory = "c:\\";
+            saveFileDialog.Filter = "txt files (*.txt)|*.txt";
+            saveFileDialog.FilterIndex = 2;
+            saveFileDialog.RestoreDirectory = true;
+
+            try
+            {
+                saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    filePath = saveFileDialog.FileName;
+                    FileReaderWriter fr = new FileReaderWriter(filePath);
+                    fr.WriteToFile(MainGraph,SourceNumber,DestNumber,filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Nie można zapisać pliku z danymi: " + ex.Message);
+            }
         }
         #endregion
 
