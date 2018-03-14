@@ -147,7 +147,7 @@ namespace ShortestPath
                     setSourceAndDestNumberLabels(sourceAndDestNumbers[0], sourceAndDestNumbers[1]);
                     MainGraph = fv.getGraphPaths(CitiesNumber);
                     StringTextBox.Text = WriteGraphAsString();
-                    ShowGrapInDataGrid();
+                    ShowGraphInDataGrid();
                 }
             }
             catch (Exception ex)
@@ -156,7 +156,7 @@ namespace ShortestPath
             }
         }
 
-        private void ShowGrapInDataGrid()
+        private void ShowGraphInDataGrid()
         {
             DataTable dt = new DataTable();
             int nbColumns = CitiesNumber;
@@ -196,8 +196,7 @@ namespace ShortestPath
             }
             return graphString;
 
-        }
-
+        }   //wypisz grasz jako liste dwuwymiarowa
 
         private void ExitAppClick(object sender, RoutedEventArgs e)
         {
@@ -213,7 +212,6 @@ namespace ShortestPath
         private void DijkstryClick(object sender, RoutedEventArgs e)
         {
             int INF = Dijkstry.INF;
-
             int SRC = SourceNumber;
             int DEST = DestNumber;
             var dijkstra = new Dijkstry(MainGraph);
@@ -227,6 +225,24 @@ namespace ShortestPath
 
             StringTextBox.Text = pathDi;
             
+        }
+
+        private void BFSClick(object sender, RoutedEventArgs e)
+        {
+            int INF = Dijkstry.INF;
+            int SRC = SourceNumber;
+            int DEST = DestNumber;
+            var bfs = new BFS(MainGraph,SRC);
+            bfs.getBFSPath();
+            List<int> path = bfs.getBFSPathToPoint(DEST);
+
+            string pathS="";
+            path.Reverse();
+            foreach (int a in path)
+            {
+                pathS = pathS + (a+1)+" -> ";
+            }
+            StringTextBox.Text = pathS;
         }
     }
 }

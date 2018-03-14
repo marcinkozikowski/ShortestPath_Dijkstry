@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BFS.cs" />
     <Compile Include="Dijkstry.cs" />
     <Compile Include="Graph\InputGraphData.cs" />
     <Compile Include="IO_Operations\FileReader.cs" />

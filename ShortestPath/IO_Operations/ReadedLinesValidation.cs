@@ -59,6 +59,7 @@ namespace ShortestPath.IO_Operations
             }
             return graph;
         }
+
         private int[,] writeEmptyGraph(int[,] graph)
         {
             int INF = Dijkstry.INF;

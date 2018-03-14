@@ -37,6 +37,7 @@
             </MenuItem>
             <MenuItem Header="Ścieżka">
                 <MenuItem Header="Dijkstry" Click="DijkstryClick"/>
+                <MenuItem Header="BFS" Click="BFSClick"/>
             </MenuItem>
             <MenuItem Header="Pomoc"/>
         </Menu>
