@@ -9,6 +9,6 @@ To find paths and distance in graph there is possibility to open special txt fil
 Application User Interface was build in WPF technology and is very simple to use. Just pick which algorythm shoud find path, and wait for resault. 
 On the left there is a DataGrid to check wether reading information from file is correct.
 <p align="center">
-  <img src="https://github.com/marcinkozikowski/ShortestPath_Dijkstry/blob/master/main_window.png" width="350"/>
+  <img src="https://github.com/marcinkozikowski/ShortestPath_Dijkstry/blob/master/main_window.png" width="550"/>
 </p>
 
