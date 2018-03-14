@@ -222,6 +222,7 @@ namespace ShortestPath
             {
                 pathDi = pathDi+ (path[i]+1)+ " -> ";
             }
+            pathDi = pathDi+ "\nIt costs: " + dijkstra.getPathDistance();
 
             StringTextBox.Text = pathDi;
             
@@ -236,12 +237,14 @@ namespace ShortestPath
             bfs.getBFSPath();
             List<int> path = bfs.getBFSPathToPoint(DEST);
 
-            string pathS="";
+            string pathS="BFS Shortes way is: \n";
             path.Reverse();
             foreach (int a in path)
             {
-                pathS = pathS + (a+1)+" -> ";
+                pathS = pathS + " -> "+ (a+1);
             }
+
+            pathS = pathS + "\nThis way costs: " + (path.Count()-1);
             StringTextBox.Text = pathS;
         }
     }

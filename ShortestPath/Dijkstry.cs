@@ -10,6 +10,8 @@ namespace ShortestPath
     {
         public const int INF = 1000000;
         public int[,] Graph { get; set; }
+        private int[] Path;
+        private Queue<int> distaneQueue;
 
         public Dijkstry(int[,] graph)
         {
@@ -59,7 +61,28 @@ namespace ShortestPath
                     }
                 }
             } while (graphSize > 0);
-            return ReconstructPath(prev, SRC, DEST);
+            Path = ReconstructPath(prev, SRC, DEST);
+            return Path;
+        }
+
+        public int getPathDistance()
+        {
+            int distance = 0;
+            int currentNode = 0;
+            int nextNode = 0;
+            distaneQueue = new Queue<int>();
+            for(int i=0;i<Path.Length;i++)      //add all path nodes to queue
+            {
+                distaneQueue.Enqueue(Path[i]);
+            }
+            currentNode = distaneQueue.Dequeue();
+            while (distaneQueue.Count()>0)
+            {
+                nextNode = distaneQueue.Dequeue();
+                distance = distance + Graph[currentNode, nextNode];
+                currentNode = nextNode;
+            }
+            return distance;
         }
 
         public int[] ReconstructPath(int[] prev, int SRC, int DEST)

@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("chart.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("icons/graph.png")]
 
 
