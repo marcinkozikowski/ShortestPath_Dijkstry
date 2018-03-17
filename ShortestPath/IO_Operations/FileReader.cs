@@ -16,17 +16,16 @@ namespace ShortestPath.IO_Operations
             path = filePath;
         }
 
-        public string[] ReadAllLines()
+        public StreamReader ReadAllLines()
         {
             if (checkFile())
             {
-                // Open the file to read from.
-                string[] readText = File.ReadAllLines(path);
-                return readText;
+                StreamReader fileStream = new StreamReader(path);
+                return fileStream;
             }
             else
             {
-                return empty;
+                return null;
             }
         }
 

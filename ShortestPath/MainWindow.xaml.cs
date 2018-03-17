@@ -1,5 +1,7 @@
-﻿using ShortestPath.IO_Operations;
+﻿using ShortestPath.Graph;
+using ShortestPath.IO_Operations;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,6 +30,7 @@ namespace ShortestPath
         int sourceNumber;
         int destNumber;
         int[,] mainGraph;
+        ArrayList[] incidenceList;
 
         #region Properties
 
@@ -96,6 +99,19 @@ namespace ShortestPath
             }
         }
 
+        public ArrayList[] IncidenceList
+        {
+            get
+            {
+                return incidenceList;
+            }
+
+            set
+            {
+                incidenceList = value;
+            }
+        }
+
         #endregion
 
         public MainWindow()
@@ -139,15 +155,17 @@ namespace ShortestPath
                 {
                     filePath = openFileDialog1.FileName;
                     FileReaderWriter fr = new FileReaderWriter(filePath);
-                    string[] readedFile = fr.ReadAllLines();
-                    ReadedLinesValidation fv = new ReadedLinesValidation(readedFile);
+                    ReadedLinesValidation fv = new ReadedLinesValidation(fr.ReadAllLines());
                     int[] cityAndPathsNumber = fv.getCitiesAndPathNumber();
-                    int[] sourceAndDestNumbers = fv.getSourceAndDestanationPoints();
                     setCityAndPathsNumberLabels(cityAndPathsNumber[0], cityAndPathsNumber[1]);
-                    setSourceAndDestNumberLabels(sourceAndDestNumbers[0], sourceAndDestNumbers[1]);
-                    MainGraph = fv.getGraphPaths(CitiesNumber);
-                    StringTextBox.Text = WriteGraphAsString();
-                    ShowGraphInDataGrid();
+                    IncidenceList = new ArrayList[CitiesNumber];
+                    IncidenceList = fv.getGraphPaths(PathsNumber, IncidenceList);
+                    //MainGraph = fv.getGraphPaths(CitiesNumber,PathsNumber);
+                    //StringTextBox.Text = WriteGraphAsString();
+                    //int[] sourceAndDestNumbers = fv.getSourceAndDestanationPoints();
+                    //setCityAndPathsNumberLabels(cityAndPathsNumber[0], cityAndPathsNumber[1]);
+                    //setSourceAndDestNumberLabels(sourceAndDestNumbers[0], sourceAndDestNumbers[1]);
+                    //ShowGraphInDataGrid();
                 }
             }
             catch (Exception ex)
@@ -232,7 +250,6 @@ namespace ShortestPath
 
         private void DijkstryClick(object sender, RoutedEventArgs e)
         {
-            int INF = Dijkstry.INF;
             int SRC = SourceNumber;
             int DEST = DestNumber;
             var dijkstra = new Dijkstry(MainGraph);
@@ -251,7 +268,6 @@ namespace ShortestPath
 
         private void BFSClick(object sender, RoutedEventArgs e)
         {
-            int INF = Dijkstry.INF;
             int SRC = SourceNumber;
             int DEST = DestNumber;
             var bfs = new BFS(MainGraph,SRC);

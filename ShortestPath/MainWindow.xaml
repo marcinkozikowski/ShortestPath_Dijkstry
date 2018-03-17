@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ShortestPath"
         mc:Ignorable="d"
         Icon="Icons\chart.ico"
-        Title="MainWindow" Height="450" Width="600">
+        Title="ShortestPath - M.Kozikowski" Height="450" Width="600">
 
     <Grid>
         <Grid.RowDefinitions>

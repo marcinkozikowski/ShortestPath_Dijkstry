@@ -31,13 +31,13 @@ namespace ShortestPath
         {
             BfsQueue.Clear();
             setEmptyHelpTable(PathHelp);
-            PathHelp[3, StartPoint] = VISITED;  //Start point was visited
-            PathHelp[1, StartPoint] = 0;        //Distance from start point to start point equals 0
-            BfsQueue.Enqueue(StartPoint);       //Add start point to queue
+            PathHelp[3, (StartPoint-1)] = VISITED;  //Start point was visited
+            PathHelp[1, (StartPoint-1)] = 0;        //Distance from start point to start point equals 0
+            BfsQueue.Enqueue((StartPoint-1));       //Add start point to queue
             int currentNode = -1;
                 while (BfsQueue.Count()>0)       //Until queu is not empty
                 {
-                    currentNode = BfsQueue.Dequeue()-1;   //take first node from queu
+                    currentNode = BfsQueue.Dequeue();   //take first node from queu
                 if (currentNode > -1)
                 {
                     for (int i = 0; i < nodeNumber; i++)
@@ -48,7 +48,7 @@ namespace ShortestPath
                             {
                                 BfsQueue.Enqueue(i);
                                 PathHelp[3, i] = VISITED;
-                                PathHelp[1, i] = PathHelp[1, currentNode] + 1;
+                                PathHelp[1, i] = PathHelp[1, currentNode]+1;
                                 PathHelp[2, i] = currentNode;
                             }
                         }
@@ -60,14 +60,16 @@ namespace ShortestPath
         public List<int> getBFSPathToPoint(int dest)
         {
             int beforePoint = -1;
+            int distance = 0;
             int destenationPoint = dest - 1;
             List<int> pathPoint = new List<int>();
             pathPoint.Add(destenationPoint);
-            while(beforePoint!=StartPoint-1)
+            while(beforePoint!=(StartPoint-1))
             {
             
                 beforePoint = PathHelp[2, destenationPoint];
                 pathPoint.Add(beforePoint);
+                distance = distance + Graph[beforePoint, destenationPoint];
                 destenationPoint = beforePoint;
             }
             return pathPoint;

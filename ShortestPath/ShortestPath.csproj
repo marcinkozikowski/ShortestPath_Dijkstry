@@ -69,6 +69,7 @@
     <Compile Include="BFS.cs" />
     <Compile Include="Dijkstry.cs" />
     <Compile Include="Graph\InputGraphData.cs" />
+    <Compile Include="Graph\Node.cs" />
     <Compile Include="IO_Operations\FileReader.cs" />
     <Compile Include="IO_Operations\ReadedLinesValidation.cs" />
     <Compile Include="MainWindow.xaml.cs">
