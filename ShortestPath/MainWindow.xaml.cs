@@ -122,23 +122,6 @@ namespace ShortestPath
             InitializeComponent();
         }
 
-
-        private void setCityAndPathsNumberLabels(int cities,int paths)
-        {
-            CitiesNumber = cities;
-            PathsNumber = paths;
-            CitiesNumberLabel.Content = CitiesNumber;
-            PathsNumberLabel.Content = PathsNumber;
-        }
-
-        private void setSourceAndDestNumberLabels(int source, int dest)
-        {
-            SourceNumber = source;
-            DestNumber = dest;
-            SourceNumberLabel.Content = SourceNumber;
-            DestenationNumberLabel.Content = DestNumber;
-        }
-
         #region MenuItemsHandlers
 
         private void OpenFile(object sender, RoutedEventArgs e)
@@ -276,12 +259,28 @@ namespace ShortestPath
                 MessageBox.Show("Error: Nie można zapisać pliku z danymi: " + ex.Message);
             }
         }
-        #endregion
 
         private void setLastSearchTime(long miliseconds)
         {
-            Timebel.Content = miliseconds+ " miliseconds";
+            Timebel.Content = miliseconds + " miliseconds";
         }
+
+        private void setCityAndPathsNumberLabels(int cities, int paths)
+        {
+            CitiesNumber = cities;
+            PathsNumber = paths;
+            CitiesNumberLabel.Content = CitiesNumber;
+            PathsNumberLabel.Content = PathsNumber;
+        }
+
+        private void setSourceAndDestNumberLabels(int source, int dest)
+        {
+            SourceNumber = source;
+            DestNumber = dest;
+            SourceNumberLabel.Content = SourceNumber;
+            DestenationNumberLabel.Content = DestNumber;
+        }
+        #endregion
 
         private void DijkstryClick(object sender, RoutedEventArgs e)
         {
