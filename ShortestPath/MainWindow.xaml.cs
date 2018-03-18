@@ -5,9 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -30,6 +32,7 @@ namespace ShortestPath
         int sourceNumber;
         int destNumber;
         int[,] mainGraph;
+        Stopwatch stopWatch;
         ArrayList[] incidenceList;
 
         #region Properties
@@ -275,14 +278,22 @@ namespace ShortestPath
         }
         #endregion
 
+        private void setLastSearchTime(long miliseconds)
+        {
+            Timebel.Content = miliseconds+ " miliseconds";
+        }
+
         private void DijkstryClick(object sender, RoutedEventArgs e)
         {
+            stopWatch = new Stopwatch();
+            
             int SRC = SourceNumber;
             int DEST = DestNumber;
             var dijkstra = new Dijkstry(IncidenceList);
+            stopWatch.Start();
             int[] path = dijkstra.GetPath(SRC-1, DEST-1);
             //int[] path = dijkstra.GetPath(SRC - 1, DEST - 1, CitiesNumber);
-
+            stopWatch.Stop();
             string pathDi = "Shortest path from "+SourceNumber+" to: "+DestNumber+" is:\n";
             for (int i = 0; i < path.Length; i++)
             {
@@ -291,6 +302,7 @@ namespace ShortestPath
             pathDi = pathDi + "\nIt costs: " + dijkstra.getPathDistance();
 
             StringTextBox.Text = pathDi;
+            setLastSearchTime(stopWatch.ElapsedMilliseconds);
             
         }
 
@@ -299,7 +311,10 @@ namespace ShortestPath
             int SRC = SourceNumber;
             int DEST = DestNumber;
             var bfs = new BFS(MainGraph,SRC,IncidenceList);
+            stopWatch = new Stopwatch();
+            stopWatch.Start();
             bfs.getBFSPath();
+            stopWatch.Stop();
             List<int> path = bfs.getBFSPathToPoint(DEST);
 
             string pathS="BFS Shortes way is: \n";
@@ -311,6 +326,7 @@ namespace ShortestPath
 
             pathS = pathS + "\nThis way come across: " + (path.Count()-2)+" cities";
             StringTextBox.Text = pathS;
+            setLastSearchTime(stopWatch.ElapsedMilliseconds);
         }
     }
 }

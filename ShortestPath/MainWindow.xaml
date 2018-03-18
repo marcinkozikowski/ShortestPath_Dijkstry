@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ShortestPath"
         mc:Ignorable="d"
         Icon="Icons\chart.ico"
-        Title="ShortestPath - M.Kozikowski" Height="450" Width="600">
+        Title="ShortestPath - M.Kozikowski" Height="450" Width="800">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -86,13 +86,15 @@
             <Grid Margin="5px">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="0" Content="Ilość miast: " FontWeight="Bold"/>
@@ -104,6 +106,8 @@
                 <Label Grid.Column="5" Content="0" Name="SourceNumberLabel" Foreground="Red"/>
                 <Label Grid.Column="6" Content="Koniec: " FontWeight="Bold"/>
                 <Label Grid.Column="7" Content="0" Name="DestenationNumberLabel" Foreground="Red"/>
+                <Label Grid.Column="8" Content="Czas przeszukiwania: " FontWeight="Bold"/>
+                <Label Grid.Column="9" Content="0" Name="Timebel" Foreground="Red"/>
             </Grid>
         </GroupBox>
 
