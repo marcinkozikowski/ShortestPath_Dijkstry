@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace ShortestPath.IO_Operations
             }
         }
 
-        public void WriteToFile(int[,] graph, int _SRC, int _DST,string pathFile)
+        public void WriteToFile(int[,] graph, int _SRC, int _DST,string pathFile,ArrayList[] list)
         {
             string bfsS = "";
             string dijkstryS = "";
@@ -49,7 +50,7 @@ namespace ShortestPath.IO_Operations
             int INF = Dijkstry.INF;
             int SRC = _SRC;
             int DEST = _DST;
-            var dijkstra = new Dijkstry(graph);
+            var dijkstra = new Dijkstry(list);
             int[] path = dijkstra.GetPath(SRC - 1, DEST - 1);
 
             string pathDi = "";
@@ -63,7 +64,7 @@ namespace ShortestPath.IO_Operations
             dijkstryS += costDi + Environment.NewLine + pathDi+Environment.NewLine;
 
 
-            var bfs = new BFS(graph, _SRC);
+            var bfs = new BFS(graph, _SRC,list);
             bfs.getBFSPath();
             List<int> pathBFS = new List<int>();
             pathBFS = bfs.getBFSPathToPoint(DEST);

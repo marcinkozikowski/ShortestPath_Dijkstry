@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ShortestPath.Graph;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,61 +10,89 @@ namespace ShortestPath
 {
     class Dijkstry
     {
+        public const int NONODESBEFORE = -1;
+        public const int NOVISITED = -2;
+        public const int VISITED = 1;
         public const int INF = 1000000;
         public int[,] Graph { get; set; }
         private int[] Path;
+        int[] dist;
+        int[] prev;
+        int[] visited;
         private Queue<int> distaneQueue;
+        ArrayList[] list;
 
-        public Dijkstry(int[,] graph)
+        public Dijkstry(ArrayList[] _list)
         {
-            Graph = graph;
+            list = _list;
+            int size = list.Length;
+            dist = new int[size];
+            prev = new int[size];
+            visited = new int[size];
         }
-
         public int[] GetPath(int SRC, int DEST)
         {
-            int graphSize = Graph.GetLength(0);
-            int[] dist = new int[graphSize];
-            int[] prev = new int[graphSize];
-            int[] nodes = new int[graphSize];
+            int graphSize = list.Count();
+            int smallestNode = 0;
 
-            for (int i = 0; i < dist.Length; i++)
+            for (int i = 0; i < graphSize; i++)     //Inicjalizacja pustych tabele odleglosci, poprzednikow oraz nazw wierzcholkow
             {
-                dist[i] = prev[i] = INF;
-                nodes[i] = i;
+                dist[i] = INF;
+                prev[i] = NONODESBEFORE;
+                visited[i] = NOVISITED;
             }
 
-            dist[SRC] = 0;
-            do
+            dist[SRC] = 0;                          //odleglosc od punktu poczatkowego =0
+            while(isAnyUnvisited(visited))
             {
-                int smallest = nodes[0];
-                int smallestIndex = 0;
-                for (int i = 1; i < graphSize; i++)
+                int i = 0;
+                smallestNode = getSmallestNodeNoVisited();
+                if (smallestNode==INF ||smallestNode==DEST)
                 {
-                    if (dist[nodes[i]] < dist[smallest])
-                    {
-                        smallest = nodes[i];
-                        smallestIndex = i;
-                    }
-                }
-                graphSize--;
-                nodes[smallestIndex] = nodes[graphSize];
-
-                if (dist[smallest] == INF || smallest == DEST)
                     break;
-
-                for (int i = 0; i < graphSize; i++)
+                }
+                visited[smallestNode] = VISITED;
+                foreach(Node n in list[smallestNode])
                 {
-                    int v = nodes[i];
-                    int newDist = dist[smallest] + Graph[smallest, v];
-                    if (newDist < dist[v])
+                    if(dist[n.Index]>(dist[smallestNode] + getPathCost(smallestNode, n.Index)))   
                     {
-                        dist[v] = newDist;
-                        prev[v] = smallest;
+                        dist[n.Index] = dist[smallestNode] + getPathCost(smallestNode, n.Index);
+                        prev[n.Index] = smallestNode;
                     }
                 }
-            } while (graphSize > 0);
+            }
             Path = ReconstructPath(prev, SRC, DEST);
             return Path;
+        }
+        
+        private bool isAnyUnvisited(int[] list)
+        {
+            for(int i=0;i<list.Count();i++)
+            {
+                if(list[i]==NOVISITED)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private int getSmallestNodeNoVisited()
+        {
+            int node=INF;
+            int distance = INF;
+            for(int i=0;i<dist.Length;i++)
+            {
+                if(visited[i]==NOVISITED)
+                {
+                    if(dist[i]<=distance)
+                    {
+                        distance = dist[i];
+                        node = i;
+                    }
+                }
+            }
+            return node;
         }
 
         public int getPathDistance()
@@ -79,10 +109,28 @@ namespace ShortestPath
             while (distaneQueue.Count()>0)
             {
                 nextNode = distaneQueue.Dequeue();
-                distance = distance + Graph[currentNode, nextNode];
+                distance = distance + getPathCost(currentNode, nextNode);
                 currentNode = nextNode;
             }
             return distance;
+        }
+
+        private int getPathCost(int src, int dst)
+        {
+            if(src==dst)
+            {
+                return 0;
+            }
+            ArrayList nodes = list[src];
+            for(int i=0;i<nodes.Count;i++)
+            {
+                Node n = nodes[i] as Node;
+                if(n.Index==dst)
+                {
+                    return n.Cost;
+                }
+            }
+            return INF;
         }
 
         public int[] ReconstructPath(int[] prev, int SRC, int DEST)

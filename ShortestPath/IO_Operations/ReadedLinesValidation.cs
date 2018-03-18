@@ -41,6 +41,9 @@ namespace ShortestPath.IO_Operations
 
         public int[] getSourceAndDestanationPoints()
         {
+            string[] betweenPoints = getLastLine().Split(' ');
+            SRC = int.Parse(betweenPoints[0]);
+            DST = int.Parse(betweenPoints[1]);
             int[] srcdst = new int[2] { SRC, DST };
             return srcdst;
         }
@@ -89,33 +92,45 @@ namespace ShortestPath.IO_Operations
             return graph;
         }
 
-        public ArrayList[] getGraphPaths(int pathsCount,ArrayList[] list)
+        private string getLastLine()
+        {
+            string m = "";
+            StreamReader r = fileStream;
+            while (r.EndOfStream == false)
+            {
+                m = r.ReadLine();
+            }
+            Console.WriteLine("{0}\n", m);
+            r.Close();
+            return m;
+        }
+
+        public ArrayList[] getGraphPaths(int citiesNumber,int pathsCount,ArrayList[] list)
         {
             string[] lineSplit;
             int source = 0;
             int dest = 0;
+            int count = 0;
             int pathLength = 0;
-            Node n = new Node(0, 0);
 
-            for(int i=0;i<pathsCount;i++)
+            for (int i = 0; i < pathsCount; i++)
             {
-                    lineSplit = fileStream.ReadLine().Split(' ');
-                    source = int.Parse(lineSplit[0]);
-                    dest = int.Parse(lineSplit[1]);
-                    pathLength = int.Parse(lineSplit[2]);
-                n.Index = (dest - 1);
-                n.Cost = pathLength;
-                  
-
-                    if (pathLength < 0)
-                    {
-                        throw new Exception("Distance can`t be less than 0");
-                    }
-                    //TODO  Check why there is no object when adding new node
-                    else
-                    {
-                        list[(source - 1)].Add(n);
-                    }
+                lineSplit = fileStream.ReadLine().Split(' ');
+                source = int.Parse(lineSplit[0]);
+                dest = int.Parse(lineSplit[1]);
+                pathLength = int.Parse(lineSplit[2]);
+                Node n = new Node((dest - 1), pathLength);
+                Node n1 = new Graph.Node((source - 1), pathLength);
+                if (pathLength < 0)
+                {
+                    throw new Exception("Distance can`t be less than 0");
+                }
+                else
+                {
+                    list[source - 1].Add(n);
+                    list[dest - 1].Add(n1);
+                    count++;
+                }
             }
             return list;
         }

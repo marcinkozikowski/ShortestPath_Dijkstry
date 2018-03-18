@@ -37,10 +37,10 @@ namespace ShortestPath.Graph
             }
         }
 
-        public Node(int index,int cost)
+        public Node(int _index,int _cost)
         {
-            index = Index;
-            cost = Cost;
+            Index = _index;
+            Cost = _cost;
         }
     }
 }

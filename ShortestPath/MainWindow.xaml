@@ -49,34 +49,18 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Header="Tablica połączeń" Margin="5px">
+            <GroupBox Header="Informacje o pliku" Margin="5px">
                 <GroupBox.BorderBrush>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
                 </GroupBox.BorderBrush>
-                <DataGrid Grid.Column="0" Name="InputDataGrid" RowDetailsVisibilityMode="Visible" CanUserResizeColumns="True" HeadersVisibility="All" RowHeaderWidth="20" SelectionMode="Single" ScrollViewer.CanContentScroll="True" Margin="5px" SelectionUnit="Cell">
-                    <DataGrid.BorderBrush>
-                        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
-                    </DataGrid.BorderBrush>
-                    <DataGrid.Background>
-                        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
-                    </DataGrid.Background>
-                    <DataGrid.RowHeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path., 
-                        RelativeSource={RelativeSource AncestorType=DataGridRow}}"></TextBlock>
-                        </DataTemplate>
-                    </DataGrid.RowHeaderTemplate>
-                    <DataGrid.RowHeaderStyle>
-                        <Style>
-                            <Setter Property="Control.Background" Value="Gainsboro"/>
-                        </Style>
-                    </DataGrid.RowHeaderStyle>
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style>
-                            <Setter Property="Control.Background" Value="Gainsboro"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
-                </DataGrid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Name="fileStatusLabel" FontWeight="Bold" FontSize="14" Foreground="Red" Content="Nie wczytano pliku !!" Margin="5px"/>
+                    <TextBlock Grid.Row="1" Name="filePathLabel" FontWeight="Normal" FontSize="12" Margin="5px" TextWrapping="Wrap"/>
+                </Grid>
             </GroupBox>
 
             <GridSplitter Grid.Column="1" Width="2" HorizontalAlignment="Stretch" Margin="5px">
@@ -88,7 +72,7 @@
                 </GridSplitter.BorderBrush>
             </GridSplitter>
 
-            <TextBox Grid.Column="2" Name="StringTextBox" Margin="5px">
+            <TextBox Grid.Column="2" Name="StringTextBox" Margin="5px" TextWrapping="WrapWithOverflow">
                 <TextBox.BorderBrush>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
                 </TextBox.BorderBrush>

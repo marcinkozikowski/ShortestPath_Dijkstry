@@ -158,47 +158,74 @@ namespace ShortestPath
                     ReadedLinesValidation fv = new ReadedLinesValidation(fr.ReadAllLines());
                     int[] cityAndPathsNumber = fv.getCitiesAndPathNumber();
                     setCityAndPathsNumberLabels(cityAndPathsNumber[0], cityAndPathsNumber[1]);
-                    IncidenceList = new ArrayList[CitiesNumber];
-                    IncidenceList = fv.getGraphPaths(PathsNumber, IncidenceList);
                     //MainGraph = fv.getGraphPaths(CitiesNumber,PathsNumber);
+                    setIncidenceList();
+                    IncidenceList = fv.getGraphPaths(CitiesNumber,PathsNumber, IncidenceList);
+                    int[] sourceAndDestNumbers = fv.getSourceAndDestanationPoints();
                     //StringTextBox.Text = WriteGraphAsString();
-                    //int[] sourceAndDestNumbers = fv.getSourceAndDestanationPoints();
-                    //setCityAndPathsNumberLabels(cityAndPathsNumber[0], cityAndPathsNumber[1]);
-                    //setSourceAndDestNumberLabels(sourceAndDestNumbers[0], sourceAndDestNumbers[1]);
+                    setSourceAndDestNumberLabels(sourceAndDestNumbers[0], sourceAndDestNumbers[1]);
                     //ShowGraphInDataGrid();
+                    setFileStatusLabels(filePath, true);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error: Nie można odczytać pliku z danymi: " + ex.Message);
+                setFileStatusLabels(filePath, false);
             }
         }
 
-        private void ShowGraphInDataGrid()
+        private ArrayList[] setIncidenceList()
         {
-            DataTable dt = new DataTable();
-            int nbColumns = CitiesNumber;
-            int nbRows = CitiesNumber;
-
-            for (int i = 0; i < nbColumns; i++)
+            IncidenceList = new ArrayList[CitiesNumber];
+            for (int i = 0; i < IncidenceList.Length; i++)
             {
-                dt.Columns.Add(("City "+(i+1)).ToString());
+                IncidenceList[i] = new ArrayList();
             }
-            //dt.Rows.Add();
-
-            for (int row = 0; row < nbRows; row++)
-            {
-                DataRow dr = dt.NewRow();
-                
-                for (int col = 0; col < nbColumns; col++)
-                {
-                        dr[col] = MainGraph[row, col]; 
-                }
-                dt.Rows.Add(dr);
-            }
-
-            InputDataGrid.ItemsSource = dt.DefaultView;
+            return IncidenceList;
         }
+
+        private void setFileStatusLabels(string filePath,bool status)
+        {
+            if (status)
+            {
+                filePathLabel.Text = "Plik: \n" + filePath;
+                fileStatusLabel.Foreground = new SolidColorBrush(Colors.Green);
+                fileStatusLabel.Content = "Poprawnie wczytano plik !!";
+            }
+            else if(!status)
+            {
+                filePathLabel.Text = "Plik: " + filePath;
+                fileStatusLabel.Foreground = new SolidColorBrush(Colors.Red);
+                fileStatusLabel.Content = "Błąd podczas wczytywania pliku... !!";
+            }
+        }
+
+        //private void ShowGraphInDataGrid()
+        //{
+        //    DataTable dt = new DataTable();
+        //    int nbColumns = CitiesNumber;
+        //    int nbRows = CitiesNumber;
+
+        //    for (int i = 0; i < nbColumns; i++)
+        //    {
+        //        dt.Columns.Add(("City "+(i+1)).ToString());
+        //    }
+        //    //dt.Rows.Add();
+
+        //    for (int row = 0; row < nbRows; row++)
+        //    {
+        //        DataRow dr = dt.NewRow();
+                
+        //        for (int col = 0; col < nbColumns; col++)
+        //        {
+        //                dr[col] = MainGraph[row, col]; 
+        //        }
+        //        dt.Rows.Add(dr);
+        //    }
+
+        //    InputDataGrid.ItemsSource = dt.DefaultView;
+        //}
 
         private string WriteGraphAsString()
         {
@@ -238,7 +265,7 @@ namespace ShortestPath
                 {
                     filePath = saveFileDialog.FileName;
                     FileReaderWriter fr = new FileReaderWriter(filePath);
-                    fr.WriteToFile(MainGraph,SourceNumber,DestNumber,filePath);
+                    fr.WriteToFile(MainGraph,SourceNumber,DestNumber,filePath,IncidenceList);
                 }
             }
             catch (Exception ex)
@@ -252,15 +279,16 @@ namespace ShortestPath
         {
             int SRC = SourceNumber;
             int DEST = DestNumber;
-            var dijkstra = new Dijkstry(MainGraph);
+            var dijkstra = new Dijkstry(IncidenceList);
             int[] path = dijkstra.GetPath(SRC-1, DEST-1);
+            //int[] path = dijkstra.GetPath(SRC - 1, DEST - 1, CitiesNumber);
 
             string pathDi = "Shortest path from "+SourceNumber+" to: "+DestNumber+" is:\n";
-            for(int i=0;i<path.Length;i++)
+            for (int i = 0; i < path.Length; i++)
             {
-                pathDi = pathDi+ (path[i]+1)+ " -> ";
+                pathDi = pathDi + (path[i] + 1) + " -> ";
             }
-            pathDi = pathDi+ "\nIt costs: " + dijkstra.getPathDistance();
+            pathDi = pathDi + "\nIt costs: " + dijkstra.getPathDistance();
 
             StringTextBox.Text = pathDi;
             
@@ -270,7 +298,7 @@ namespace ShortestPath
         {
             int SRC = SourceNumber;
             int DEST = DestNumber;
-            var bfs = new BFS(MainGraph,SRC);
+            var bfs = new BFS(MainGraph,SRC,IncidenceList);
             bfs.getBFSPath();
             List<int> path = bfs.getBFSPathToPoint(DEST);
 
@@ -281,7 +309,7 @@ namespace ShortestPath
                 pathS = pathS + " -> "+ (a+1);
             }
 
-            pathS = pathS + "\nThis way costs: " + (path.Count()-1);
+            pathS = pathS + "\nThis way come across: " + (path.Count()-2)+" cities";
             StringTextBox.Text = pathS;
         }
     }
