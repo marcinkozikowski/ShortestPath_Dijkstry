@@ -42,7 +42,7 @@ namespace ShortestPath.IO_Operations
             }
         }
 
-        public void WriteToFile(int[,] graph, int _SRC, int _DST,string pathFile,ArrayList[] list)
+        public void WriteToFile(long[,] graph, int _SRC, int _DST,string pathFile,ArrayList[] list)
         {
             string bfsS = "";
             string dijkstryS = "";
@@ -61,14 +61,15 @@ namespace ShortestPath.IO_Operations
             }
             costDi += dijkstra.getPathDistance();
 
-            dijkstryS += costDi + Environment.NewLine + pathDi+Environment.NewLine;
+            dijkstryS += costDi + Environment.NewLine + pathDi;
 
-
+            int Distance = 0;
             var bfs = new BFS(graph, _SRC,list);
             bfs.getBFSPath();
-            List<int> pathBFS = new List<int>();
-            pathBFS = bfs.getBFSPathToPoint(DEST);
-            bfsS = bfsS + (pathBFS.Count() - 1)+Environment.NewLine;
+            bfs.getBFSPathToPointR(DEST - 1, new List<int>());
+            List<int> pathBFS = bfs.getShortestBFSPath(DEST - 1);
+            Distance = bfs.getPathCost(pathBFS);
+            bfsS = bfsS + (pathBFS.Count() - 2)+" "+Distance+Environment.NewLine;
             string pathS = "";
             pathBFS.Reverse();
             foreach (int a in pathBFS)

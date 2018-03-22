@@ -48,10 +48,10 @@ namespace ShortestPath.IO_Operations
             return srcdst;
         }
 
-        public int[,] getGraphPaths(int citiesCount, int paths)
+        public long[,] getGraphPaths(int citiesCount, int paths)
         {
             //StreamReader reader = new StreamReader(path);
-            int[,] graph = new int[citiesCount,citiesCount];
+            long[,] graph = new long[citiesCount,citiesCount];
             int i = 0;
             string[] lineSplit;
             int source = 0;
@@ -64,9 +64,11 @@ namespace ShortestPath.IO_Operations
 
             while ((line = fileStream.ReadLine()) != null)
             {
+                i++;
                 if (i == paths)
                 {
                     setSourceAndDestanationPoints(line);
+                    break;
                 }
                 else
                 {
@@ -74,7 +76,6 @@ namespace ShortestPath.IO_Operations
                     source = int.Parse(lineSplit[0]);
                     dest = int.Parse(lineSplit[1]);
                     pathLength = int.Parse(lineSplit[2]);
-                    i++;
 
                     if (pathLength < 0)
                     {
@@ -135,7 +136,7 @@ namespace ShortestPath.IO_Operations
             return list;
         }
 
-        private int[,] writeEmptyGraph(int[,] graph)
+        private long[,] writeEmptyGraph(long[,] graph)
         {
             int INF = Dijkstry.INF;
             double count = Convert.ToDouble(graph.Length);

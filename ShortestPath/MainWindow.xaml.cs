@@ -22,16 +22,13 @@ using System.Windows.Shapes;
 
 namespace ShortestPath
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         int citiesNumber;
         int pathsNumber;
         int sourceNumber;
         int destNumber;
-        int[,] mainGraph;
+        long[,] mainGraph;
         Stopwatch stopWatch;
         ArrayList[] incidenceList;
 
@@ -89,7 +86,7 @@ namespace ShortestPath
             }
         }
 
-        public int[,] MainGraph
+        public long[,] MainGraph
         {
             get
             {
@@ -289,6 +286,7 @@ namespace ShortestPath
             int SRC = SourceNumber;
             int DEST = DestNumber;
             var dijkstra = new Dijkstry(IncidenceList);
+            //var dijkstra = new Dijkstry(MainGraph);
             stopWatch.Start();
             int[] path = dijkstra.GetPath(SRC-1, DEST-1);
             //int[] path = dijkstra.GetPath(SRC - 1, DEST - 1, CitiesNumber);
@@ -310,12 +308,15 @@ namespace ShortestPath
             int SRC = SourceNumber;
             int DEST = DestNumber;
             var bfs = new BFS(MainGraph,SRC,IncidenceList);
+            int Distance = 0;
+            
             stopWatch = new Stopwatch();
             stopWatch.Start();
             bfs.getBFSPath();
+            bfs.getBFSPathToPointR(DEST-1,new List<int>());
+            List<int> path = bfs.getShortestBFSPath(DEST-1);
             stopWatch.Stop();
-            List<int> path = bfs.getBFSPathToPoint(DEST);
-
+            Distance = bfs.getPathCost(path);
             string pathS="BFS Shortes way is: \n";
             path.Reverse();
             foreach (int a in path)
@@ -323,7 +324,7 @@ namespace ShortestPath
                 pathS = pathS + " -> "+ (a+1);
             }
 
-            pathS = pathS + "\nThis way come across: " + (path.Count()-2)+" cities";
+            pathS = pathS + "\nThis way come across: " + (path.Count()-2)+" cities and it costs: "+Distance;
             StringTextBox.Text = pathS;
             setLastSearchTime(stopWatch.ElapsedMilliseconds);
         }

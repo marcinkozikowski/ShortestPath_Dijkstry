@@ -14,7 +14,7 @@ namespace ShortestPath
         public const int NOVISITED = -2;
         public const int VISITED = 1;
         public const int INF = 1000000;
-        public int[,] Graph { get; set; }
+        public long[,] Graph { get; set; }
         private int[] Path;
         int[] dist;
         int[] prev;
@@ -30,6 +30,16 @@ namespace ShortestPath
             prev = new int[size];
             visited = new int[size];
         }
+
+        public Dijkstry(long[,] graph)
+        {
+            Graph = graph;
+            long size = graph.Length;
+            dist = new int[size];
+            prev = new int[size];
+            visited = new int[size];
+        }
+
         public int[] GetPath(int SRC, int DEST)
         {
             int graphSize = list.Count();
@@ -42,12 +52,11 @@ namespace ShortestPath
                 visited[i] = NOVISITED;
             }
 
-            dist[SRC] = 0;                          //odleglosc od punktu poczatkowego =0
-            while(isAnyUnvisited(visited))
+            dist[SRC] = 0;                          //odleglosc od punktu poczatkowego = 0
+            while(isAnyUnvisited())
             {
-                int i = 0;
                 smallestNode = getSmallestNodeNoVisited();
-                if (smallestNode==INF ||smallestNode==DEST)
+                if (smallestNode==INF || smallestNode==DEST)
                 {
                     break;
                 }
@@ -64,12 +73,56 @@ namespace ShortestPath
             Path = ReconstructPath(prev, SRC, DEST);
             return Path;
         }
-        
-        private bool isAnyUnvisited(int[] list)
+
+        public int[] GetPathMatrix(int SRC, int DEST)
         {
-            for(int i=0;i<list.Count();i++)
+            int graphSize = Graph.GetLength(0);
+            int[] nodes = new int[dist.Length];
+
+            for (int i = 0; i < dist.Length; i++)
             {
-                if(list[i]==NOVISITED)
+                dist[i] = prev[i] = INF;
+                nodes[i] = i;
+            }
+
+            dist[SRC] = 0;
+            do
+            {
+                int smallest = nodes[0];
+                int smallestIndex = 0;
+                for (int i = 1; i < graphSize; i++)
+                {
+                    if (dist[nodes[i]] < dist[smallest])
+                    {
+                        smallest = nodes[i];
+                        smallestIndex = i;
+                    }
+                }
+                graphSize--;
+                nodes[smallestIndex] = nodes[graphSize];
+
+                if (dist[smallest] == INF || smallest == DEST)
+                    break;
+
+                for (int i = 0; i < graphSize; i++)
+                {
+                    int v = nodes[i];
+                    int newDist = dist[smallest] + Convert.ToInt32(Graph[smallest, v]);
+                    if (newDist < dist[v])
+                    {
+                        dist[v] = newDist;
+                        prev[v] = smallest;
+                    }
+                }
+            } while (graphSize > 0);
+            return ReconstructPath(prev, SRC, DEST);
+        }
+
+        private bool isAnyUnvisited()
+        {
+            for(int i=0;i<visited.Count();i++)
+            {
+                if(visited[i]==NOVISITED)
                 {
                     return true;
                 }
@@ -83,13 +136,10 @@ namespace ShortestPath
             int distance = INF;
             for(int i=0;i<dist.Length;i++)
             {
-                if(visited[i]==NOVISITED)
+                if(visited[i]==NOVISITED && dist[i]<=distance)
                 {
-                    if(dist[i]<=distance)
-                    {
                         distance = dist[i];
                         node = i;
-                    }
                 }
             }
             return node;
@@ -122,9 +172,8 @@ namespace ShortestPath
                 return 0;
             }
             ArrayList nodes = list[src];
-            for(int i=0;i<nodes.Count;i++)
+            foreach(Node n in nodes)
             {
-                Node n = nodes[i] as Node;
                 if(n.Index==dst)
                 {
                     return n.Cost;
